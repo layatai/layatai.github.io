@@ -32,6 +32,7 @@ body {
     z-index: 1000;
     padding: 1rem 0;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .nav-container {
@@ -43,10 +44,23 @@ body {
     align-items: center;
 }
 
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.nav-favicon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
 .nav-logo h2 {
     color: #2563eb;
     font-weight: 700;
     font-size: 1.5rem;
+    margin: 0;
 }
 
 .nav-menu {
@@ -86,14 +100,38 @@ body {
     display: none;
     flex-direction: column;
     cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.hamburger:hover {
+    background-color: rgba(37, 99, 235, 0.1);
 }
 
 .bar {
-    width: 25px;
-    height: 3px;
-    background-color: #333;
-    margin: 3px 0;
-    transition: 0.3s;
+    width: 22px;
+    height: 2px;
+    background-color: #2563eb;
+    margin: 2.5px 0;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.hamburger:hover .bar {
+    background-color: #1d4ed8;
+}
+
+.hamburger.active .bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
 }
 
 /* Hero Section */
@@ -619,21 +657,48 @@ section {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .navbar {
+        padding: 0.75rem 0;
+        height: 56px;
+    }
+
+    .nav-container {
+        height: 100%;
+    }
+
     .hamburger {
         display: flex;
+    }
+
+    .nav-favicon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .nav-logo h2 {
+        font-size: 1.3rem;
     }
 
     .nav-menu {
         position: fixed;
         left: -100%;
-        top: 70px;
+        top: 56px;
         flex-direction: column;
         background-color: white;
         width: 100%;
+        height: calc(100vh - 56px);
         text-align: center;
         transition: 0.3s;
-        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
-        padding: 2rem 0;
+        box-shadow: none;
+        border-top: 1px solid #e5e7eb;
+        padding: 1rem 0;
+        overflow-y: auto;
+        gap: 0;
+        margin: 0;
+    }
+
+    .nav-item {
+        padding: 0.5rem 0;
     }
 
     .nav-menu.active {
@@ -695,6 +760,23 @@ section {
 }
 
 @media (max-width: 480px) {
+    .nav-favicon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .nav-logo h2 {
+        font-size: 1.2rem;
+    }
+
+    .hamburger {
+        padding: 6px;
+    }
+
+    .bar {
+        width: 20px;
+    }
+
     .hero-title {
         font-size: 2rem;
     }
