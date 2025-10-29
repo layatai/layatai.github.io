@@ -1,3 +1,36 @@
+// Dark Mode Toggle
+const themeToggle = document.querySelector('.theme-toggle');
+const html = document.documentElement;
+const navbar = document.querySelector('.navbar');
+
+// Check for saved theme preference or default to 'light' mode
+const currentTheme = localStorage.getItem('theme') || 'light';
+html.setAttribute('data-theme', currentTheme);
+updateNavbarStyles();
+
+// Toggle theme
+themeToggle.addEventListener('click', () => {
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateNavbarStyles();
+});
+
+function updateNavbarStyles() {
+    const currentTheme = html.getAttribute('data-theme');
+    const isDark = currentTheme === 'dark';
+    
+    if (window.scrollY > 100) {
+        navbar.style.background = isDark ? 'rgba(31, 41, 55, 0.98)' : 'rgba(255, 255, 255, 0.98)';
+        navbar.style.boxShadow = isDark ? '0 2px 20px rgba(0, 0, 0, 0.3)' : '0 2px 20px rgba(0, 0, 0, 0.1)';
+    } else {
+        navbar.style.background = isDark ? 'rgba(31, 41, 55, 0.95)' : 'rgba(255, 255, 255, 0.95)';
+        navbar.style.boxShadow = 'none';
+    }
+}
+
 // Mobile Navigation Toggle
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
@@ -28,16 +61,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // Navbar background change on scroll
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-    } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.boxShadow = 'none';
-    }
-});
+window.addEventListener('scroll', updateNavbarStyles);
 
 // Animate skill bars when they come into view
 const observerOptions = {
